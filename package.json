@@ -1,0 +1,29 @@
+{
+  "name": "yoinbol.web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babelify": "^7.2.0",
+    "bootstrap": "^3.3.6",
+    "browser-sync": "^2.10.1",
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "history": "^1.13.1",
+    "jquery": "^2.1.4",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-router": "^1.0.2",
+    "request": "^2.67.0",
+    "vinyl-source-stream": "^1.1.0",
+    "when": "^3.7.5"
+  },
+  "dependencies": {
+    "flux": "^2.1.1"
+  }
+}
