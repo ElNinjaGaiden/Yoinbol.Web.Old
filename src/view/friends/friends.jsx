@@ -1,10 +1,9 @@
 import React from 'react';
+import AuthenticatedComponent from '../base/AuthenticatedComponent';
 
-class Friends extends React.Component {
-
-	render () {
-		return (<div>Friends</div>)
-	}
-}
-
-export default Friends;
+export default AuthenticatedComponent(class Friends extends React.Component {
+  	render() {
+     	// Here, we display the user information
+    	return (<h1>Friends</h1>);
+  	}
+});
