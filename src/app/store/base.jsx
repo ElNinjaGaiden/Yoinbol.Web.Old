@@ -5,6 +5,7 @@ export default class BaseStore extends EventEmitter {
 
   constructor() {
     super();
+    this._initialized = false;
   }
 
   subscribe(actionSubscribe) {
@@ -15,8 +16,12 @@ export default class BaseStore extends EventEmitter {
     return this._dispatchToken;
   }
 
+  get initialized () {
+    return this._initialized;
+  }
+
   emitChange() {
-    this.emit('CHANGE');
+    this.emit('CHANGE', arguments && arguments[0]);
   }
 
   addChangeListener(cb) {

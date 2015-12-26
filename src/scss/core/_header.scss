@@ -1,0 +1,26 @@
+.header.sidebar .logo{
+	padding: 14px 15px;
+	color: #fff;
+}
+.header.sidebar .logo img{
+	width: 30px;
+	margin-right: 2px;
+	border-radius: 4px;
+	margin-top: -4px;
+}
+.header.sidebar .logo h1{
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-family: 'Open Sans', Arial;
+	font-weight: 600;
+	letter-spacing: -1px;
+}
+.header.sidebar .logo h1 a {
+    color: #999;
+}
+.header.sidebar .logo h1 a:hover {
+	text-decoration: none;
+	color: #fff;
+}

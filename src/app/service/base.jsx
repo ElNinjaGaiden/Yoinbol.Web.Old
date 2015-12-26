@@ -4,7 +4,8 @@ class BaseService {
 
 	constructor() {
 		var me = this;
-		me.baseUrl = 'http://192.168.0.6/api';
+		//me.baseUrl = 'http://192.168.0.6/api';
+		me.baseUrl = 'http://10.184.154.119/api';
 		me.dataType = 'json';
 		me.contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
         me.crossDomain = true;

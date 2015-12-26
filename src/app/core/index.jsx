@@ -2,6 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
+import jQuery from 'jquery';
+global.jQuery = jQuery;
+
 import App from './app';
 import Home from '../view/home/home';
 import User  from '../view/users/user';
