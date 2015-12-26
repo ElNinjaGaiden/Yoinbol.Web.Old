@@ -25,7 +25,6 @@ class LanguagesShortcut extends React.Component {
 
 		if(!LocalesStore.initialized) {
 			LocalesStore.addChangeListener(me.onLocalesLoad.bind(me));
-			LocalesStore.load();
 		}
 		else {
 			me.onLocalesLoad();
