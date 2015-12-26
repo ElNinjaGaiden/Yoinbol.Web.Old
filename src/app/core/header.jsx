@@ -4,44 +4,70 @@ import arrayFind from 'array-find';
 import arrayFilter from 'array-filter';
 import LanguagesStore from '../store/languages';
 import SessionStore from '../store/session';
+import LocalesStore from '../store/locales';
 
 class LanguagesShortcut extends React.Component {
 
 	componentWillMount() {
 		const me = this;
 		me.setState({});
+	}
+
+	componentDidMount () {
+		const me = this;
 		if(!LanguagesStore.initialized) {
 			LanguagesStore.addChangeListener(me.onLanguagesLoad.bind(me));
 			LanguagesStore.load();
 		}
 		else {
-			me.onLanguagesLoad(LanguagesStore.languages);
+			me.onLanguagesLoad();
 		}
+
+		if(!LocalesStore.initialized) {
+			LocalesStore.addChangeListener(me.onLocalesLoad.bind(me));
+			LocalesStore.load();
+		}
+		else {
+			me.onLocalesLoad();
+		}		
 	}
 
-	onLanguagesLoad (languages) {
-		const me = this;
-		const state = {
-			languages: languages
+	getLanguagesState () {
+		return {
+			languages: LanguagesStore.languages
 		};
-		me.setState(state);
+	}
+
+	getLocalesState () {
+		return {
+			locales: LocalesStore.locales.app.header
+		};
+	}
+
+	onLanguagesLoad () {
+		this.setState(this.getLanguagesState());
+	}
+
+	onLocalesLoad() {
+		this.setState(this.getLocalesState());
 	}
 
 	componentWillUnmount() {
 		const me = this;
 		LanguagesStore.removeChangeListener(me.onLanguagesLoad);
+		LocalesStore.removeChangeListener(me.onLocalesLoad);
 	}
 
 	changeLanguage(languageId) {
-		LanguagesStore.currentLanguageId = languageId;
-		location.reload()
+		SessionStore.currentLanguageId = languageId;
+		location.reload();
 	}
 
 	render () {
 		const me = this;
 		const options = [];
 		const languages = me.state.languages || [];
-		const currentLanguageId = SessionStore.currentLanguage;
+		const currentLanguageId = SessionStore.currentLanguageId;
 		const currentLanguage = arrayFind(languages, function (language) {
 			return language.LanguajeId === currentLanguageId;
 		});
@@ -49,6 +75,7 @@ class LanguagesShortcut extends React.Component {
 		const otherLanguages = arrayFilter(languages, function (language) {
 			return language.LanguajeId !== currentLanguage.LanguajeId;
 		});
+		const changeLanguage = me.state.locales ? me.state.locales.changeLanguage : '';
 
 		otherLanguages.forEach(function (language, index) {
 			const cmp = (
@@ -68,7 +95,7 @@ class LanguagesShortcut extends React.Component {
 			        	{currentLanguageName} <i className="fa fa-chevron-down i-xs"></i>
 			        </a>
 			        <ul className="dropdown-menu animated half flipInX">
-			            <li className="dropdown-header visible-lg visible-md">Adios</li>
+			            <li className="dropdown-header visible-lg visible-md">{changeLanguage}</li>
 			            {options}
 			        </ul>
 			    </li>

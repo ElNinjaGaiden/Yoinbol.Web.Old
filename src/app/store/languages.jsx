@@ -6,16 +6,7 @@ class LanguagesStore extends BaseStore {
 	constructor() {
 		super();
 		this._languages = [];
-		this._currentLanguageId = null;
 	}
-
-	get currentLanguageId () {
-    return this._currentLanguageId;
-  }
-
-  set currentLanguageId (languageId) {
-    this._currentLanguageId = languageId;
-  }
 
 	get languages () {
 		return this._languages;

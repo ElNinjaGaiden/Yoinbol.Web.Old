@@ -67,7 +67,8 @@ gulp.task('move-assets', function() {
         './src/**/*.jpg',
         './src/**/*.eot',
         './src/**/*.css',
-        './src/**/*.js'
+        './src/**/*.js',
+        './src/**/*.json'
     ])
     .pipe(cache('move'))
     .pipe(gulp.dest(paths.output));
