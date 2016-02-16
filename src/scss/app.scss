@@ -1,2 +1,17 @@
+//Core app components
+@import "core/app";
 @import "core/header";
+@import "core/view-content";
+
+//Common
 @import "common/anchor";
+@import "common/box";
+@import "common/tabs";
+@import "common/form";
+@import "common/carousel";
+
+//Components
+@import "components/loginForm";
+
+//Views
+@import "views/home/home";

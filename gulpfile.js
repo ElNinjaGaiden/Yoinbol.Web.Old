@@ -15,19 +15,25 @@ var paths = {
     //templates: 'src/**/*.html',
     output: 'dist/',
     outputCss: 'dist/**/*.css',
-    sass: 'src/**/*.scss'
+    sass: 'src/**/*.scss',
+    locales: 'src/assets/locales/*.json'
 };
+
+var bundleCodeEntries = [
+    './src/app/core/index.jsx',
+    './src/js/bootstrap.min.js'
+];
 
 //Compile task -> sass + jsx build
 gulp.task('compile', function(callback) {
     return runSequence(
-        ['sass', 'build'],
+        ['sass', 'build', 'move-js', 'move-assets', 'move-fonts'],
         callback
     );
 });
 
 gulp.task('build', function () {
-    return browserify({entries: './src/app/core/index.jsx', extensions: ['.jsx', '.js'], debug: true})
+    return browserify({entries: bundleCodeEntries, extensions: ['.jsx', '.js'], debug: true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
         .pipe(source('bundle.js'))
@@ -37,6 +43,7 @@ gulp.task('build', function () {
 gulp.task('watch', [], function () {
     var inputs = [
         paths.source,
+        paths.locales,
         //paths.templates,
         paths.sass
     ];
@@ -96,4 +103,4 @@ gulp.task('sass', function() {
         .pipe(gulp.dest(paths.output));
 });
 
-gulp.task('default',['browsersync','watch', 'move-js', 'move-assets', 'move-fonts'], function() {});
+gulp.task('default',['browsersync','watch'], function() {});

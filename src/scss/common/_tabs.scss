@@ -1,0 +1,34 @@
+.box-info .nav-tabs {
+    background: #1B1E24;
+}
+.box-info .nav-tabs > li > a {
+	margin-right: 0px;
+	line-height: 1.428571429;
+	font-size: 14px;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+	border-radius: 0px 0px 0 0;
+	margin: 0;
+	color: #8B91A0;
+	-webkit-transition:All 0.4s ease;
+	-moz-transition:All 0.4s ease;
+	-o-transition:All 0.4s ease;
+}
+
+.box-info .nav-tabs > li > a i {color: #fff;}
+.box-info .nav-tabs > li.active > a,
+.box-info .nav-tabs > li.active > a:hover,
+.box-info .nav-tabs > li.active > a:focus {
+	cursor: default;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+	background-color: #ffffff;
+	color: #1B1E24;
+}
+.box-info .nav-tabs > li.active > a i,
+.box-info .nav-tabs > li.active > a:hover i,
+.box-info .nav-tabs > li.active > a:focus i {color: #212121;}

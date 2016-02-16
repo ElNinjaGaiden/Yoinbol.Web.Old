@@ -1,0 +1,11 @@
+.yb-home {
+	&.container {
+		.row:first-of-type {
+			margin-top: 35px;
+		}
+	}
+	.yb-carousel-area {
+		background-color: #fff;
+		padding: 15px;
+	}
+}

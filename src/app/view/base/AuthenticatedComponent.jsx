@@ -2,6 +2,7 @@ import React from 'react';
 import SessionStore from '../../store/session';
 import { Router } from 'react-router';
 import Unauthorized from '../common/unauthorized';
+import DoLoggin from '../common/doLoggin';
 
 export default (ComposedComponent) => {
 
@@ -15,14 +16,18 @@ export default (ComposedComponent) => {
     	_getLoginState() {
       		return {
         		userLoggedIn: SessionStore.isLoggedIn(),
-        		user: SessionStore.user,
-        		jwt: SessionStore.jwt
+        		hasAccessToken: SessionStore.hasAccessToken(),
+        		user: SessionStore.user
       		};
     	}
 
 	    // Here, we’re subscribing to changes in the SessionStore we created before. Remember that the SessionStore is an EventEmmiter.
 	    componentDidMount() {
-	      	SessionStore.addChangeListener(this._onChange.bind(this));
+	    	SessionStore.addChangeListener(this._onChange.bind(this));
+
+	    	if(!this.state.userLoggedIn && this.state.hasAccessToken) {
+	    		SessionStore.login(SessionStore.UserName, '', true);
+	    	}
 	    }
 
 	    // After any change, we update the component’s state so that it’s rendered again.
@@ -31,21 +36,25 @@ export default (ComposedComponent) => {
 	    }
 
 	    componentWillUnmount() {
-	        SessionStore.removeChangeListener(this._onChange.bind(this));
+	    	SessionStore.removeChangeListener(this._onChange.bind(this));
 	    }
 
 	    render() {
-	    	if(this.state.userLoggedIn && true) {
+	    	if(this.state.userLoggedIn) {
 	    		return (
 		      		<ComposedComponent
 		        		{...this.props}
 		        		user={this.state.user}
-		        		jwt={this.state.jwt}
 		        		userLoggedIn={this.state.userLoggedIn} />
 		      	);
 	    	}
 	    	else {
-	    		return <Unauthorized />
+	    		if(this.state.hasAccessToken) {
+	    			return <DoLoggin />;
+	    		}
+	    		else {
+	    			return <Unauthorized />;
+	    		}
 	    	}
 	    }
   	}

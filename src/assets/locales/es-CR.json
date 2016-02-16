@@ -3,5 +3,26 @@
 		"header": {
 			"changeLanguage": "Escoje tu idioma"
 		}
+	},
+	"common": {
+		"invalidFieldMessage": "Dato inválido",
+		"or": "ó"
+	},
+	"components": {
+		"loginForm": {
+			"userNameInput": "Nombre de usuario (email)",
+			"passwordInput": "Contraseña",
+			"rememberMeInput": "Recordarme",
+			"loginButton": "Iniciar sesión",
+			"forgotPassword": "Olvidaste tú contraseña?",
+			"loginWithFacebook": "Iniciar sesión con Facebook"
+		}
+	},
+	"views": {
+		"home": {
+			"slogan": "La vida es un juego...",
+			"loginTabLabel": "Iniciar sesión",
+			"registerTabLabel": "Registrarse"
+		}
 	}
 }

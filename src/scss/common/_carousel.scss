@@ -1,0 +1,11 @@
+.carousel {
+	.carousel-indicators {
+		li {
+			border-radius: 0px;
+			margin-right: 5px;
+		}
+		li:last-of-type {
+			margin-right: 0px
+		}
+	}
+}

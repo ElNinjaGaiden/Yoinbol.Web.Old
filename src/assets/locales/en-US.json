@@ -3,5 +3,26 @@
 		"header": {
 			"changeLanguage": "Pick your language"
 		}
+	},
+	"common": {
+		"invalidFieldMessage": "Invalid field value",
+		"or": "or"
+	},
+	"components": {
+		"loginForm": {
+			"userNameInput": "User name (email)",
+			"passwordInput": "Password",
+			"rememberMeInput": "Remember me",
+			"loginButton": "Login",
+			"forgotPassword": "Forgot password?",
+			"loginWithFacebook": "Login with Facebook"
+		}
+	},
+	"views": {
+		"home": {
+			"slogan": "Life is a game...",
+			"loginTabLabel": "Login",
+			"registerTabLabel": "Register"
+		}
 	}
 }

@@ -1,9 +1,19 @@
 import BaseService from './base';
 
-class ConfigurationService extends BaseService {
+class ConfigurationService {
 
 	get defaultLanguage() {
     	return 'es-CR';
+	}
+
+	get proxyConfiguration() {
+		return {
+			//baseUrl : 'http://192.168.0.12/api',
+			baseUrl : 'http://10.184.154.119/api',
+			dataType : 'json',
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        	crossDomain : true
+		};
 	}
 }
 

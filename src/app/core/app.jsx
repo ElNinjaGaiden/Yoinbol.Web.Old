@@ -18,7 +18,7 @@ class App extends React.Component {
     }
 
     onLocalesLoad (locales) {
-        console.log(locales);
+        console.log('App:onLocalesLoad', locales);
     }
 
     render() {
