@@ -8,13 +8,13 @@ class LoginForm extends React.Component {
 
 	static get contextTypes () {
 		return {
-    		history: React.PropTypes.object,
+    		router: React.PropTypes.object,
     		location: React.PropTypes.object
 		};
 	}
 
 	get authenthicationToken () {
-		return cookie.load('sessionId');
+		return SessionStore.accessToken;
 	}
   	
 
@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
 
   	onLoginCallback (response) {
   		if(response.Result === 0) {
-  			this.context.history.push('/dashboard');
+  			this.context.router.push('/dashboard');
   		}
   	}
 

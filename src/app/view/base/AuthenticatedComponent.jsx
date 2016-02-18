@@ -16,6 +16,7 @@ export default (ComposedComponent) => {
     	_getLoginState() {
       		return {
         		userLoggedIn: SessionStore.isLoggedIn(),
+        		isDoingLoggin: SessionStore.isDoingLoggin(),
         		hasAccessToken: SessionStore.hasAccessToken(),
         		user: SessionStore.user
       		};
@@ -40,21 +41,18 @@ export default (ComposedComponent) => {
 	    }
 
 	    render() {
-	    	if(this.state.userLoggedIn) {
+	    	if(this.state.userLoggedIn || this.state.isDoingLoggin) {
 	    		return (
 		      		<ComposedComponent
 		        		{...this.props}
 		        		user={this.state.user}
-		        		userLoggedIn={this.state.userLoggedIn} />
-		      	);
+		        		userLoggedIn={this.state.userLoggedIn} 
+		        		isDoingLoggin={this.state.isDoingLoggin} >
+	        		</ComposedComponent>
+		      	)
 	    	}
 	    	else {
-	    		if(this.state.hasAccessToken) {
-	    			return <DoLoggin />;
-	    		}
-	    		else {
-	    			return <Unauthorized />;
-	    		}
+	    		return <Unauthorized />
 	    	}
 	    }
   	}

@@ -8,7 +8,11 @@ class SessionStore extends BaseStore {
     constructor () {
         super();
         this._data = null;
+        this._accessToken = null;
+        this._isDoingLoggin = false;
     }
+
+    // Region "Public Properties"
 
     get data () {
         return this._data;
@@ -19,12 +23,22 @@ class SessionStore extends BaseStore {
     }
 
     get accessToken () {
-        return cookie.load('sessionId');
+        return this._accessToken || cookie.load('accessToken');
     }
 
     get UserName () {
         return cookie.load('userName');
     }
+
+    get currentLanguageId () {
+        return localStorage.getItem('languageId') || ConfigurationService.defaultLanguage;
+    }
+
+    set currentLanguageId (languageId) {
+        localStorage.setItem('languageId', languageId);
+    }
+
+    // End "Public Properties"
 
     isLoggedIn() {
         return !!this._data;
@@ -34,29 +48,33 @@ class SessionStore extends BaseStore {
         return !!this.accessToken;
     }
 
-    get currentLanguageId () {
-        const languageId = localStorage.getItem('languageId') || ConfigurationService.defaultLanguage;
-        return  languageId;
-    }
-
-    set currentLanguageId (languageId) {
-        localStorage.setItem('languageId', languageId);
+    isDoingLoggin () {
+        return this._isDoingLoggin;
     }
 
     login (userName, password, rememberMe) {
         const me = this;
-        const accessToken = cookie.load('sessionId');
-        AuthenticationService.login(userName, password, rememberMe, accessToken, me).done(function (response) {
+        const accessToken = cookie.load('accessToken');
+        //Turn on the flag "isDoingLogin"
+        this._isDoingLoggin = true;
+        AuthenticationService.login(userName, password, rememberMe, accessToken, me)
+        .done(response => {
             if(response.Result === 0) {
                 me._data = response;
                 //If rememberMe is set to true, we store userName and sessionToken locally to future use
                 if(rememberMe) {
-                    cookie.save('sessionId', response.SessionTicket.AccessToken);
+                    cookie.save('accessToken', response.SessionTicket.AccessToken);
                     cookie.save('userName', userName);
+
+                    this._accessToken = response.SessionTicket.AccessToken;
                 }
                 //Notify the change on session
                 me.emitChange(response);
             }
+        })
+        .always(() => {
+            //Turn off the flag "isDoingLogin"
+            this._isDoingLoggin = false;
         });
     }
 }

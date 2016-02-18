@@ -3,6 +3,7 @@ import LanguagesStore from '../../store/languages';
 import LocalesStore from '../../store/locales';
 import jquery from 'jquery';
 import SessionStore from '../../store/session';
+import Header from '../../core/header';
 import LoginForm from '../../components/loginForm/loginForm';
 import RegisterForm from '../../components/registerForm/registerForm';
 
@@ -10,7 +11,7 @@ class Home extends React.Component {
 
 	static get contextTypes () {
 		return {
-    		history: React.PropTypes.object,
+    		router: React.PropTypes.object,
     		location: React.PropTypes.object
 		};
 	}
@@ -54,7 +55,7 @@ class Home extends React.Component {
 
 	onLoginCallback (response) {
   		if(response.Result === 0) {
-  			this.context.history.push('/dashboard');
+  			this.context.router.push('/dashboard');
   		}
   	}
 
@@ -66,6 +67,7 @@ class Home extends React.Component {
 	_getLoginState() {
   		return {
     		userLoggedIn: SessionStore.isLoggedIn(),
+    		isDoingLoggin: SessionStore.isDoingLoggin(),
     		hasAccessToken: SessionStore.hasAccessToken(),
     		user: SessionStore.user
   		};
@@ -84,58 +86,61 @@ class Home extends React.Component {
 	render () {
 		const me = this;
 		return (
-			<div className="container yb-home">
-				<div className="row">
-					<div className="col-sm-8 yb-carousel-area animated fadeInDownBig col-margin-top">
-						<div className="carousel slide" id="yb-home-carousel">
-							<ol className="carousel-indicators">
-			                    <li data-target="#carousel" data-slide-to="0" className="active"></li>
-			                    <li data-target="#carousel" data-slide-to="1"></li>
-			                    <li data-target="#carousel" data-slide-to="2"></li>
-			                </ol>
-			                <div className="carousel-inner">
-			                    <div className="item active">
-			                        <div className="jumbotron">
-			                            <h1>yoinbol</h1>
-		                            <p className="lead">{me.state.locales.slogan}</p>
-			                        </div>
-			                    </div>
-			                    <div className="item">
-			                        <div className="jumbotron">
-			                            <h1>yoinbol</h1>
+			<div>
+				<Header />
+				<div className="container yb-home">
+					<div className="row">
+						<div className="col-sm-8 yb-carousel-area animated fadeInDownBig col-margin-top">
+							<div className="carousel slide" id="yb-home-carousel">
+								<ol className="carousel-indicators">
+				                    <li data-target="#carousel" data-slide-to="0" className="active"></li>
+				                    <li data-target="#carousel" data-slide-to="1"></li>
+				                    <li data-target="#carousel" data-slide-to="2"></li>
+				                </ol>
+				                <div className="carousel-inner">
+				                    <div className="item active">
+				                        <div className="jumbotron">
+				                            <h1>yoinbol</h1>
 			                            <p className="lead">{me.state.locales.slogan}</p>
-			                        </div>
-			                    </div>
-			                    <div className="item">
-			                        <div className="jumbotron">
-			                            <h1>yoinbol</h1>
-			                            <p className="lead">{me.state.locales.slogan}</p>
-			                        </div>
-			                    </div>
-			                </div>
+				                        </div>
+				                    </div>
+				                    <div className="item">
+				                        <div className="jumbotron">
+				                            <h1>yoinbol</h1>
+				                            <p className="lead">{me.state.locales.slogan}</p>
+				                        </div>
+				                    </div>
+				                    <div className="item">
+				                        <div className="jumbotron">
+				                            <h1>yoinbol</h1>
+				                            <p className="lead">{me.state.locales.slogan}</p>
+				                        </div>
+				                    </div>
+				                </div>
+							</div>
 						</div>
-					</div>
-					<div className="col-sm-4 col-margin-top">
-						<div className="animated fadeInDownBig">
-			                <div className="box-info full">
-			                    <ul className="nav nav-tabs nav-justified">
-			                        <li className="active">
-			                        	<a href="#loginformtab" data-toggle="tab">{me.state.locales.loginTabLabel}</a>
-		                        	</li>
-			                        <li>
-			                        	<a href="#registerformtab" data-toggle="tab">{me.state.locales.registerTabLabel}</a>
-			                        </li>
-			                    </ul>
-			                    <div className="tab-content">
-			                        <div className="tab-pane active animated fadeInRight" id="loginformtab">
-			                            <LoginForm></LoginForm>
-			                        </div>
-			                        <div className="tab-pane animated fadeInRight" id="registerformtab">
-			                            <RegisterForm></RegisterForm>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
+						<div className="col-sm-4 col-margin-top">
+							<div className="animated fadeInDownBig">
+				                <div className="box-info full">
+				                    <ul className="nav nav-tabs nav-justified">
+				                        <li className="active">
+				                        	<a href="#loginformtab" data-toggle="tab">{me.state.locales.loginTabLabel}</a>
+			                        	</li>
+				                        <li>
+				                        	<a href="#registerformtab" data-toggle="tab">{me.state.locales.registerTabLabel}</a>
+				                        </li>
+				                    </ul>
+				                    <div className="tab-content">
+				                        <div className="tab-pane active animated fadeInRight" id="loginformtab">
+				                            <LoginForm></LoginForm>
+				                        </div>
+				                        <div className="tab-pane animated fadeInRight" id="registerformtab">
+				                            <RegisterForm></RegisterForm>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+						</div>
 					</div>
 				</div>
 			</div>

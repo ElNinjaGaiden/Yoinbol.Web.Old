@@ -8,6 +8,13 @@ import LocalesStore from '../store/locales';
 
 class LanguagesShortcut extends React.Component {
 
+	static get contextTypes () {
+		return {
+    		router: React.PropTypes.object,
+    		refresh: React.PropTypes.func
+		};
+	}
+
 	componentWillMount() {
 		const me = this;
 		me.setState({});
@@ -59,7 +66,8 @@ class LanguagesShortcut extends React.Component {
 
 	changeLanguage(languageId) {
 		SessionStore.currentLanguageId = languageId;
-		location.reload();
+		//location.reload();
+		this.context.refresh();
 	}
 
 	render () {

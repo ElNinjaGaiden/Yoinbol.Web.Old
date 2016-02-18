@@ -1,8 +1,13 @@
 import React from 'react';
-import Header from './header';
 import LocalesStore from '../store/locales';
 
 class App extends React.Component {
+
+    getChildContext() {
+        return {
+            refresh: () => this.forceUpdate()
+        }
+    }
 
     componentWillMount () {
         const me = this;
@@ -24,13 +29,16 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Header />
                 <div className="view-content">
                     {this.props.children}
                 </div>
             </div>
         )
     }
+}
+
+App.childContextTypes = {
+    refresh: React.PropTypes.func
 }
 
 export default App;

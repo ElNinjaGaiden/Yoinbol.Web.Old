@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
+//import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { createHashHistory } from 'history';
 
 import jQuery from 'jquery';
 global.jQuery = jQuery;
@@ -14,13 +16,10 @@ import Friends from '../view/friends/friends';
 import Dashboard from '../view/dashboard/dashboard';
 
 const appContainer = document.getElementById('app-container');
-
-// let bHistory = browserHistory({
-//   queryKey: false
-// });
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 render((
-  	<Router >
+  	<Router history={appHistory}>
     	<Route path="/" component={App}>
 	        <IndexRoute component={Home} />
 	        <Route path="dashboard" component={Dashboard} />
