@@ -1,3 +1,23 @@
+@import "colors";
+@import "mixins";
+
+$speed: 1.2s;
+$size: 50px;
+$unit: $size / 16;
+
+%spinner {  
+    display: block;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    border: $unit solid $strongGrey;
+    animation: spinner $speed linear infinite;
+}
+@keyframes spinner {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
+
 .modal-loader {
 	display:    none;
     position:   fixed;
@@ -6,12 +26,36 @@
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .8 ) 
-                url('http://i.stack.imgur.com/FhHRx.gif') 
-                50% 50% 
-                no-repeat;
-
+    background-color:rgba( 255, 255, 255, .8 );
     &.visible {
     	display: block;
     }
+    .modal-loader-container {
+        height: 100%;
+        @include fully-centered-content;
+    }    
+}
+
+/* Dots */
+%spinner-double-dot-in,
+.spinner-double-dot-in {
+  @extend %spinner;
+  position: relative;
+  margin: 0 auto; 
+  
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: ($unit*2);
+    left: ($size/2 -$unit);
+    width: ($unit*2);
+    height: ($unit*2);
+    border-radius: 50%;
+    background: $darkGreen;
+  }
+  &:after {
+    top: auto;
+    bottom: ($unit*2);
+  }
 }

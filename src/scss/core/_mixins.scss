@@ -1,0 +1,78 @@
+@mixin box($important: no) {
+    @if $important == important {
+        display: flex !important;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+    } @else {
+        display: flex;
+        display: -webkit-box;
+        display: -ms-flexbox;
+    }
+}
+
+@mixin box-orient($orient: horizontal, $important: no) {
+    @if $important == important {
+        -webkit-box-orient: $orient !important;
+        @if $orient == horizontal {
+            -ms-flex-direction: row !important;
+            flex-direction: row !important;
+        } @else {
+            -ms-flex-direction: column !important;
+            flex-direction: column !important;
+        }
+    } @else {
+        -webkit-box-orient: $orient;
+        @if $orient == horizontal {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        } @else {
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+    }
+}
+
+@mixin box-pack($pack: start, $important: no) {
+    @if $important == important {
+        -webkit-box-pack: $pack !important;
+        -ms-flex-pack: $pack !important;
+        @if $pack == start {
+            justify-content: flex-start !important;
+        }
+        @else if $pack == end {
+            justify-content: flex-end !important;
+        }
+        @else if $pack == justify {
+            justify-content: space-between !important;
+        }
+        @else {
+            justify-content: $pack !important;
+        }
+    } @else {
+        -webkit-box-pack: $pack;
+        -ms-flex-pack: $pack;
+        @if $pack == start {
+            justify-content: flex-start;
+        }
+        @else if $pack == end {
+            justify-content: flex-end;
+        }
+        @else if $pack == justify {
+            justify-content: space-between;
+        }
+        @else if $pack == center {
+            justify-content: center;
+        }
+        @else {
+            justify-content: $pack;
+        }
+    }
+}
+
+@mixin fully-centered-content {
+  text-align     : center;
+  //pointer-events : none;
+  @include box();
+  @include box-orient(vertical);
+  @include box-pack(center);
+}

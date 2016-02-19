@@ -15,6 +15,14 @@ class LoadingStore extends BaseStore {
 		this._loading = value;
 		this.emitChange(value);
 	}
+
+	show () {
+		this.loading = true;
+	}
+
+	hide () {
+		this.loading = false;
+	}
 }
 
 export default new LoadingStore()

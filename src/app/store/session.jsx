@@ -58,7 +58,7 @@ class SessionStore extends BaseStore {
         const accessToken = cookie.load('accessToken');
         //Turn on the flag "isDoingLogin"
         this._isDoingLoggin = true;
-        LoadingStore.loading = true;
+        LoadingStore.show();
         AuthenticationService.login(userName, password, rememberMe, accessToken, me)
         .done(response => {
             if(response.Result === 0) {
@@ -77,7 +77,7 @@ class SessionStore extends BaseStore {
         .always(() => {
             //Turn off the flag "isDoingLogin"
             this._isDoingLoggin = false;
-            LoadingStore.loading = false;
+            LoadingStore.hide();
         });
     }
 }
