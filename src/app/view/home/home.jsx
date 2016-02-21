@@ -8,7 +8,7 @@ import Header from '../../core/header';
 import LoginForm from '../../components/loginForm/loginForm';
 import RegisterForm from '../../components/registerForm/registerForm';
 
-class Home extends LocalizedComponent {
+export default class Home extends LocalizedComponent {
 
 	static get contextTypes () {
 		return {
@@ -128,5 +128,3 @@ class Home extends LocalizedComponent {
 		)
 	}
 }
-
-export default Home
