@@ -61,7 +61,7 @@ export default class Home extends LocalizedComponent {
 	}
 
 	getLocalesState () {
-		return LocalesStore.initialized ? { locales: LocalesStore.locales.views.home } : { locales: {} };
+		return { locales : LocalesStore.initialized ? LocalesStore.locales.views.home : {} };
 	}
 
 	render () {

@@ -20,7 +20,7 @@ export default AuthenticatedComponent(class Dashboard extends LocalizedComponent
     }
 
 	getLocalesState () {
-		return LocalesStore.initialized ? { locales: LocalesStore.locales.views.dashboard } : { locales: {} };
+		return { locales: LocalesStore.initialized ? LocalesStore.locales.views.dashboard : {} };
 	}
 
 	render () {

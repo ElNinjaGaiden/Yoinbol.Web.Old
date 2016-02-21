@@ -33,7 +33,7 @@ export default class LanguagesShortcut extends LocalizedComponent {
 	}
 
 	getLocalesState () {
-		return LocalesStore.initialized ? { locales: LocalesStore.locales.app.header } : { locales: {} };
+		return { locales: LocalesStore.initialized ? LocalesStore.locales.app.header : {} };
 	}
 
 	onLanguagesLoad () {
