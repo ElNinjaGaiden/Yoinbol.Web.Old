@@ -46,14 +46,7 @@ class LanguagesShortcut extends LocalizedComponent {
 	}
 
 	getLocalesState () {
-		if(LocalesStore.initialized) {
-			return {
-				locales: LocalesStore.locales.app.header
-			};
-		}
-		else {
-			return { locales: {} };
-		}
+		return LocalesStore.initialized ? { locales: LocalesStore.locales.app.header } : { locales: {} };
 	}
 
 	onLanguagesLoad () {

@@ -62,12 +62,7 @@ class Home extends LocalizedComponent {
 	}
 
 	getLocalesState () {
-		if(LocalesStore.initialized) {
-			return {
-				locales: LocalesStore.locales.views.home
-			};
-		}
-		return { locales: {} };
+		return LocalesStore.initialized ? { locales: LocalesStore.locales.views.home } : { locales: {} };
 	}
 
 	render () {
