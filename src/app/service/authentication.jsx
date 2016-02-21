@@ -3,14 +3,14 @@ import ConfigurationService from './configuration';
 
 class AuthenticationService extends BaseService {
 
-	login (username, password, rememberMe, accessToken, scope) {
+	login (username, password, rememberMe, accessToken, accountType, scope) {
 
 		const 	me 		= this,
 				data 	= {
 					login           : username,
 		            password        : password,
 		            frontEndId      : ConfigurationService.frontEndId,
-		            accountType     : 1,
+		            accountType     : accountType,
 		            rememberMe		: rememberMe,
 		            accessToken		: accessToken
 				},

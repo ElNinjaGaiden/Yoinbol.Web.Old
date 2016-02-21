@@ -31,7 +31,8 @@ export default class Home extends LocalizedComponent {
 		if(!this.state.userLoggedIn && this.state.hasAccessToken) {
 			this.sessionStoreListener = this.onLoginCallback.bind(this);
 			SessionStore.addChangeListener(this.sessionStoreListener);
-    		SessionStore.login(SessionStore.UserName, '', true);
+
+    		SessionStore.login(SessionStore.UserName, '', true, SessionStore.accountType);
     	}
 
 		//???

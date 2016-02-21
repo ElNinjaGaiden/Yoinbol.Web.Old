@@ -3,6 +3,7 @@ import LoadingStore from './loading';
 import ConfigurationService from '../service/configuration';
 import AuthenticationService from '../service/authentication';
 import cookie from 'react-cookie';
+import FacebookService from '../service/facebook';
 
 class SessionStore extends BaseStore {
 
@@ -35,6 +36,10 @@ class SessionStore extends BaseStore {
         return cookie.load('userName');
     }
 
+    get accountType () {
+        return cookie.load('accountType');
+    }
+
     get currentLanguageId () {
         return localStorage.getItem('languageId') || ConfigurationService.defaultLanguage;
     }
@@ -57,12 +62,12 @@ class SessionStore extends BaseStore {
         return this._isDoingLoggin;
     }
 
-    login (userName, password, rememberMe) {
+    login (userName, password, rememberMe, accountType) {
         const accessToken = cookie.load('accessToken');
         //Turn on the flag "isDoingLogin"
         this._isDoingLoggin = true;
         LoadingStore.show();
-        return AuthenticationService.login(userName, password, rememberMe, accessToken, this)
+        return AuthenticationService.login(userName, password, rememberMe, accessToken, accountType, this)
         .done(response => {
             if(response.Result === 0) {
                 this._data = response;
@@ -70,6 +75,7 @@ class SessionStore extends BaseStore {
                 if(rememberMe) {
                     cookie.save('accessToken', response.SessionTicket.AccessToken);
                     cookie.save('userName', userName);
+                    cookie.save('accountType', accountType);
 
                     this._accessToken = response.SessionTicket.AccessToken;
                 }
@@ -81,6 +87,97 @@ class SessionStore extends BaseStore {
             //Turn off the flag "isDoingLogin"
             this._isDoingLoggin = false;
             LoadingStore.hide();
+        });
+    }
+
+    loginWithFacebook () {
+        this._isDoingLoggin = true;
+        LoadingStore.show();
+
+        //LoadingStore.show();
+        FacebookService.getLoginStatus(loginStatusResponse => {
+            
+            //Validate the user login status response
+            if(loginStatusResponse.success === true) {
+
+                if(loginStatusResponse.data.status === 'connected') {
+
+                    FacebookService.getUserData(userDataResponse => {
+
+                        const accessToken = cookie.load('accessToken');
+
+                        AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, accessToken, 2, this)
+                        .done(response => {
+                            if(response.Result === 0) {
+                                this._data = response;
+                                cookie.save('accessToken', response.SessionTicket.AccessToken);
+                                cookie.save('userName', userDataResponse.data.email);
+                                cookie.save('accountType', 2);
+                                this._accessToken = response.SessionTicket.AccessToken;
+                                //Notify the change on session
+                                this.emitChange(response);
+                            }
+                            else {
+                                //Error authenticating user on yoinbol
+                                console.error('Error authenticating user on yoinbol', response);
+                            }
+
+                            this._isDoingLoggin = false;
+                            LoadingStore.hide();
+                        })
+                        .error(error => {
+                            this._isDoingLoggin = false;
+                            LoadingStore.hide();
+                        });
+
+                    }, this);
+                }
+                else {
+
+                    FacebookService.login(loginResponse => {
+
+                        FacebookService.getUserData(userDataResponse => {
+
+                            const accessToken = cookie.load('accessToken');
+
+                            AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, 2)
+                            .done(response => {
+                                if(response.Result === 0) {
+                                    this._data = response;
+                                    //If rememberMe is set to true, we store userName and sessionToken locally to future use
+                                    if(rememberMe) {
+                                        cookie.save('accessToken', response.SessionTicket.AccessToken);
+                                        cookie.save('userName', userName);
+                                        cookie.save('accountType', 2);
+                                        this._accessToken = response.SessionTicket.AccessToken;
+                                    }
+                                    //Notify the change on session
+                                    this.emitChange(response);
+                                }
+                                else {
+                                    //Error authenticating user on yoinbol
+                                    console.error('Error authenticating user on yoinbol', response);
+                                }
+
+                                this._isDoingLoggin = false;
+                                LoadingStore.hide();
+                            })
+                            .error(error => {
+                                this._isDoingLoggin = false;
+                                LoadingStore.hide();
+                            });
+
+                        }, this);
+
+                    });
+                }
+            }
+            else {
+                //Error getting the user login status
+                this._isDoingLoggin = false;
+                LoadingStore.hide();
+                console.error('Error getting facebook login status', loginStatusResponse);
+            }
         });
     }
 

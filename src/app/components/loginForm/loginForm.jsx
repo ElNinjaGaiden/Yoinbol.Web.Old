@@ -61,8 +61,11 @@ export default class LoginForm extends LocalizedComponent {
 	}
 
 	onLoginClick () {
-		SessionStore.login(this.state.userName, this.state.password, this.state.rememberMe);
-		return false;
+		SessionStore.login(this.state.userName, this.state.password, this.state.rememberMe, 1);
+	}
+
+	onLoginWithFacebookClick () {
+		SessionStore.loginWithFacebook();
 	}
 
 	onUserNameChange(e) {
@@ -110,7 +113,7 @@ export default class LoginForm extends LocalizedComponent {
 		            </div>
 		        </div>
 				<p className="text-center"><strong>- {this.state.locales.or} -</strong></p>
-				<button type="button" className="btn btn-primary btn-block btn-facebook">
+				<button type="button" className="btn btn-primary btn-block btn-facebook" onClick={this.onLoginWithFacebookClick.bind(this)}>
 					<i className="fa fa-facebook"></i>
 					{this.state.locales.loginWithFacebook}
 				</button>
