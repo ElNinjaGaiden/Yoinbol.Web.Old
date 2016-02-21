@@ -65,7 +65,6 @@ export default class Home extends LocalizedComponent {
 	}
 
 	render () {
-		const me = this;
 		return (
 			<div>
 				<Header />
@@ -82,19 +81,19 @@ export default class Home extends LocalizedComponent {
 				                    <div className="item active">
 				                        <div className="jumbotron">
 				                            <h1>yoinbol</h1>
-			                            <p className="lead">{me.state.locales.slogan}</p>
+			                            <p className="lead">{this.state.locales.slogan}</p>
 				                        </div>
 				                    </div>
 				                    <div className="item">
 				                        <div className="jumbotron">
 				                            <h1>yoinbol</h1>
-				                            <p className="lead">{me.state.locales.slogan}</p>
+				                            <p className="lead">{this.state.locales.slogan}</p>
 				                        </div>
 				                    </div>
 				                    <div className="item">
 				                        <div className="jumbotron">
 				                            <h1>yoinbol</h1>
-				                            <p className="lead">{me.state.locales.slogan}</p>
+				                            <p className="lead">{this.state.locales.slogan}</p>
 				                        </div>
 				                    </div>
 				                </div>
@@ -105,10 +104,10 @@ export default class Home extends LocalizedComponent {
 				                <div className="box-info full">
 				                    <ul className="nav nav-tabs nav-justified">
 				                        <li className="active">
-				                        	<a href="#loginformtab" data-toggle="tab">{me.state.locales.loginTabLabel}</a>
+				                        	<a href="#loginformtab" data-toggle="tab">{this.state.locales.loginTabLabel}</a>
 			                        	</li>
 				                        <li>
-				                        	<a href="#registerformtab" data-toggle="tab">{me.state.locales.registerTabLabel}</a>
+				                        	<a href="#registerformtab" data-toggle="tab">{this.state.locales.registerTabLabel}</a>
 				                        </li>
 				                    </ul>
 				                    <div className="tab-content">

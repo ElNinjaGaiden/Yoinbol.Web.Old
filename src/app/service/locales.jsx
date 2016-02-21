@@ -14,14 +14,12 @@ class LocalesService extends BaseService {
 		if(!me._loading) {
 			const url = 'dist/assets/locales/' + languageId + '.json';
 			me._loading = true;
-			me._promise = me.apiRequest(url, {}, 'GET', scope || this).always(function () {
+			me._promise = me.apiRequest(url, {}, 'GET', scope || me).always(function () {
 				me._loading = false;
 			});
-			return me._promise;
+			
 		}
-		else {
-			return me._promise;
-		}
+		return this._promise;
 	}
 }
 
