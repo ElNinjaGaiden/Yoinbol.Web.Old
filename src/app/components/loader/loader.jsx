@@ -1,7 +1,7 @@
 import React from 'react';
-import LoadingStore from '../store/loading';
+import LoadingStore from '../../store/loading';
 
-class Loader extends React.Component {
+export default class Loazder extends React.Component {
 
 	componentWillMount () {
 
@@ -33,5 +33,3 @@ class Loader extends React.Component {
 		)
 	}
 }
-
-export default Loader

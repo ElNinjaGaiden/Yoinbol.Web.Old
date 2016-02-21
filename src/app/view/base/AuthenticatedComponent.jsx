@@ -1,7 +1,7 @@
 import React from 'react';
-import SessionStore from '../../store/session';
 import { Router } from 'react-router';
-import Unauthorized from '../common/unauthorized';
+import SessionStore from '../../store/session';
+//import Unauthorized from '../common/unauthorized';
 import Home from '../home/home';
 
 export default (ComposedComponent) => {
@@ -13,16 +13,6 @@ export default (ComposedComponent) => {
       		this.state = this._getLoginState();
     	}
 
-    	_getLoginState() {
-      		return {
-        		userLoggedIn: SessionStore.isLoggedIn(),
-        		isDoingLoggin: SessionStore.isDoingLoggin(),
-        		hasAccessToken: SessionStore.hasAccessToken(),
-        		user: SessionStore.user
-      		};
-    	}
-
-	    // Here, we’re subscribing to changes in the SessionStore we created before. Remember that the SessionStore is an EventEmmiter.
 	    componentDidMount() {
 
 	    	this.sessionStoreListener = this._onChange.bind(this);
@@ -37,7 +27,15 @@ export default (ComposedComponent) => {
 	    	SessionStore.removeChangeListener(this.sessionStoreListener);
 	    }
 
-	    // After any change, we update the component’s state so that it’s rendered again.
+	    _getLoginState() {
+      		return {
+        		userLoggedIn: SessionStore.isLoggedIn(),
+        		isDoingLoggin: SessionStore.isDoingLoggin(),
+        		hasAccessToken: SessionStore.hasAccessToken(),
+        		user: SessionStore.user
+      		};
+    	}
+
 	    _onChange() {
 	      	this.setState(this._getLoginState());
 	    }

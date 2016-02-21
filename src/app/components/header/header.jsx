@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import LanguagesShortcut from '../components/languagesShortcut/languagesShortcut';
+import LanguagesShortcut from '../languagesShortcut/languagesShortcut';
 
 export default class Header extends React.Component {
 

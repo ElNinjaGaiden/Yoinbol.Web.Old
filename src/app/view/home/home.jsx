@@ -4,7 +4,7 @@ import LanguagesStore from '../../store/languages';
 import LocalesStore from '../../store/locales';
 import jquery from 'jquery';
 import SessionStore from '../../store/session';
-import Header from '../../core/header';
+import Header from '../../components/header/header';
 import LoginForm from '../../components/loginForm/loginForm';
 import RegisterForm from '../../components/registerForm/registerForm';
 

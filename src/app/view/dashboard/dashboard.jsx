@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../core/header';
+import Header from '../../components/header/header';
 import LocalesStore from '../../store/locales';
 import LocalizedComponent from '../base/LocalizedComponent';
 import AuthenticatedComponent from '../base/AuthenticatedComponent';

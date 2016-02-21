@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from './loader';
+import Loader from '../components/loader/loader';
 import LanguagesStore from '../store/languages';
 import LocalesStore from '../store/locales';
 
