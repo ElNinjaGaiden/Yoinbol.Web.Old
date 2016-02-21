@@ -1,10 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router';
 import LanguagesShortcut from '../languagesShortcut/languagesShortcut';
+import SessionStore from '../../store/session';
 
 export default class Header extends React.Component {
 
+	static get contextTypes () {
+		return {
+    		router: React.PropTypes.object
+		};
+	}
+
+	onLogoutClick () {
+		SessionStore.logout().done(response => {
+			this.context.router.push('/');
+		});
+	}
+
 	render() {
+
+		const rightContent = (SessionStore.isLoggedIn() ? 
+			<ul className="nav navbar-nav navbar-right">
+			    <li className="dropdown">
+			        <a className="dropdown-toggle" data-toggle="dropdown" onClick={this.onLogoutClick.bind(this)}>
+			        	Logout <i className="fa fa-sign-out i-xs"></i>
+			        </a>
+			    </li>
+			</ul> : 
+			<LanguagesShortcut />);
+
 		return (
 			<div className="navbar navbar-inverse navbar-fixed-top">
 				<div className="container">
@@ -27,7 +51,7 @@ export default class Header extends React.Component {
 					<div className="navbar-collapse collapse">
 						<ul className="nav navbar-nav">
 						</ul>
-						<LanguagesShortcut />
+						{rightContent}
 					</div>
 				</div>
 			</div>

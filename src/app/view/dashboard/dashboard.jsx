@@ -27,9 +27,6 @@ export default AuthenticatedComponent(class Dashboard extends LocalizedComponent
 		return (
 			<div>
 				<Header />
-				<div className="container">
-					{this.state.locales.test}
-				</div>
 			</div>
 		)
 	}

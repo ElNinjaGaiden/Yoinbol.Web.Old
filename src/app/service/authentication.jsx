@@ -18,6 +18,12 @@ class AuthenticationService extends BaseService {
 
 		return me.apiRequest(url, data, 'POST', scope || me);
 	}
+
+	logout (sessionTicket, scope) {
+		const url = this.getUrl('authentication/endSession');
+		const data = { sessionTicket: sessionTicket };
+		return this.apiRequest(url, data, 'POST', scope || this);
+	}
 }
 
 export default new AuthenticationService()

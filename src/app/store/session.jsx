@@ -27,6 +27,10 @@ class SessionStore extends BaseStore {
         return this._accessToken || cookie.load('accessToken');
     }
 
+    get sessionTicket () {
+        return this._data ? this._data.SessionTicket : null;
+    }
+
     get UserName () {
         return cookie.load('userName');
     }
@@ -78,6 +82,22 @@ class SessionStore extends BaseStore {
             //Turn off the flag "isDoingLogin"
             this._isDoingLoggin = false;
             LoadingStore.hide();
+        });
+    }
+
+    logout () {
+        const me = this;
+        LoadingStore.show();
+        return AuthenticationService.logout(this.sessionTicket, this)
+        .done(response => {
+            this._data = null;
+            this._accessToken = null;
+            cookie.remove('accessToken');
+            cookie.remove('userName');
+            me.emitChange(response);
+        })
+        .always(() => {
+           LoadingStore.hide(); 
         });
     }
 }
