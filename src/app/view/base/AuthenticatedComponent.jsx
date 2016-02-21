@@ -24,7 +24,9 @@ export default (ComposedComponent) => {
 
 	    // Here, we’re subscribing to changes in the SessionStore we created before. Remember that the SessionStore is an EventEmmiter.
 	    componentDidMount() {
-	    	SessionStore.addChangeListener(this._onChange.bind(this));
+
+	    	this.sessionStoreListener = this._onChange.bind(this);
+	    	SessionStore.addChangeListener(this.sessionStoreListener);
 
 	    	if(!this.state.userLoggedIn && this.state.hasAccessToken) {
 	    		SessionStore.login(SessionStore.UserName, '', true);
@@ -37,7 +39,7 @@ export default (ComposedComponent) => {
 	    }
 
 	    componentWillUnmount() {
-	    	SessionStore.removeChangeListener(this._onChange.bind(this));
+	    	SessionStore.removeChangeListener(this.sessionStoreListener);
 	    }
 
 	    render() {

@@ -11,15 +11,7 @@ class App extends React.Component {
     }
 
     componentWillMount () {
-        const me = this;
-
-        if(!LocalesStore.initialized) {
-            LocalesStore.addChangeListener(me.onLocalesLoad.bind(me));
-            LocalesStore.load();
-        }
-        else {
-            me.onLocalesLoad(LocalesStore.LocalesStore);
-        }
+        LocalesStore.load();
     }
 
     onLocalesLoad (locales) {

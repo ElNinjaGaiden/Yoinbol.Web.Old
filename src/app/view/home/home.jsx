@@ -1,4 +1,5 @@
 import React from 'react';
+import LocalizedComponent from '../base/LocalizedComponent';
 import LanguagesStore from '../../store/languages';
 import LocalesStore from '../../store/locales';
 import jquery from 'jquery';
@@ -7,7 +8,7 @@ import Header from '../../core/header';
 import LoginForm from '../../components/loginForm/loginForm';
 import RegisterForm from '../../components/registerForm/registerForm';
 
-class Home extends React.Component {
+class Home extends LocalizedComponent {
 
 	static get contextTypes () {
 		return {
@@ -22,28 +23,15 @@ class Home extends React.Component {
 	}
 
 	componentWillMount() {
-		const me = this;
-		me.setState({
-			locales: {
-				slogan: '',
-				loginTabLabel: '',
-				registerTabLabel: ''
-			}
-		});
+		super.componentWillMount();
 	}
 
 	componentDidMount () {
-		const me = this;
-
-		if(!LocalesStore.initialized) {
-			LocalesStore.addChangeListener(me.onLocalesLoad.bind(me));
-		}
-		else {
-			me.onLocalesLoad();
-		}
+		super.componentDidMount();
 
 		if(!this.state.userLoggedIn && this.state.hasAccessToken) {
-			SessionStore.addChangeListener(this.onLoginCallback.bind(this));
+			this.sessionStoreListener = this.onLoginCallback.bind(this);
+			SessionStore.addChangeListener(this.sessionStoreListener);
     		SessionStore.login(SessionStore.UserName, '', true);
     	}
 
@@ -53,16 +41,16 @@ class Home extends React.Component {
 		}, 100);
 	}
 
+	componentWillUnmount () {
+		super.componentWillUnmount();
+		this.sessionStoreListener && SessionStore.removeChangeListener(this.sessionStoreListener);
+	}
+
 	onLoginCallback (response) {
   		if(response.Result === 0) {
   			this.context.router.push('/dashboard');
   		}
   	}
-
-	componentWillUnmount () {
-		const me = this;
-		LocalesStore.removeChangeListener(me.onLocalesLoad.bind(me));
-	}
 
 	_getLoginState() {
   		return {
@@ -73,14 +61,13 @@ class Home extends React.Component {
   		};
 	}
 
-	onLocalesLoad() {
-		this.setState(this.getLocalesState());
-	}
-
 	getLocalesState () {
-		return {
-			locales: LocalesStore.locales.views.home
-		};
+		if(LocalesStore.initialized) {
+			return {
+				locales: LocalesStore.locales.views.home
+			};
+		}
+		return { locales: {} };
 	}
 
 	render () {
@@ -148,4 +135,4 @@ class Home extends React.Component {
 	}
 }
 
-export default Home;
+export default Home
