@@ -2,6 +2,10 @@ import BaseService from './base';
 
 class ConfigurationService {
 
+	get frontEndId () {
+		return 2;
+	}
+
 	get defaultLanguage() {
     	return 'es-CR';
 	}

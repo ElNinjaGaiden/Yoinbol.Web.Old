@@ -18,13 +18,13 @@ export default (ComposedComponent) => {
 	    	this.sessionStoreListener = this._onChange.bind(this);
 	    	SessionStore.addChangeListener(this.sessionStoreListener);
 
-	    	if(!this.state.userLoggedIn && this.state.hasAccessToken) {
-	    		SessionStore.login(SessionStore.UserName, '', true);
-	    	}
+	    	// if(!this.state.userLoggedIn && this.state.hasAccessToken) {
+	    	// 	SessionStore.login(SessionStore.UserName, '', true);
+	    	// }
 	    }
 
 	    componentWillUnmount() {
-	    	SessionStore.removeChangeListener(this.sessionStoreListener);
+	    	this.sessionStoreListener && SessionStore.removeChangeListener(this.sessionStoreListener);
 	    }
 
 	    _getLoginState() {
@@ -47,8 +47,7 @@ export default (ComposedComponent) => {
 		        		{...this.props}
 		        		user={this.state.user}
 		        		userLoggedIn={this.state.userLoggedIn} 
-		        		isDoingLoggin={this.state.isDoingLoggin} >
-	        		</ComposedComponent>
+		        		isDoingLoggin={this.state.isDoingLoggin} />
 		      	)
 	    	}
 	    	else {

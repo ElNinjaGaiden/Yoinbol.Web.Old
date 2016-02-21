@@ -1,4 +1,5 @@
 import BaseService from './base';
+import ConfigurationService from './configuration';
 
 class AuthenticationService extends BaseService {
 
@@ -8,7 +9,7 @@ class AuthenticationService extends BaseService {
 				data 	= {
 					login           : username,
 		            password        : password,
-		            frontEndId      : 2,
+		            frontEndId      : ConfigurationService.frontEndId,
 		            accountType     : 1,
 		            rememberMe		: rememberMe,
 		            accessToken		: accessToken
