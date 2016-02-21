@@ -63,7 +63,7 @@ class SessionStore extends BaseStore {
         //Turn on the flag "isDoingLogin"
         this._isDoingLoggin = true;
         LoadingStore.show();
-        AuthenticationService.login(userName, password, rememberMe, accessToken, me)
+        return AuthenticationService.login(userName, password, rememberMe, accessToken, me)
         .done(response => {
             if(response.Result === 0) {
                 me._data = response;
