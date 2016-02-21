@@ -1,10 +1,6 @@
-//Core app components
-@import "core/app";
-@import "core/header";
-@import "core/view-content";
-@import "core/modal-loader";
-
 //Common
+@import "common/app";
+@import "common/view-content";
 @import "common/anchor";
 @import "common/box";
 @import "common/tabs";
@@ -12,7 +8,9 @@
 @import "common/carousel";
 
 //Components
+@import "components/header";
 @import "components/loginForm";
+@import "components/modal-loader";
 
 //Views
 @import "views/home/home";
