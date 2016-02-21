@@ -58,15 +58,14 @@ class SessionStore extends BaseStore {
     }
 
     login (userName, password, rememberMe) {
-        const me = this;
         const accessToken = cookie.load('accessToken');
         //Turn on the flag "isDoingLogin"
         this._isDoingLoggin = true;
         LoadingStore.show();
-        return AuthenticationService.login(userName, password, rememberMe, accessToken, me)
+        return AuthenticationService.login(userName, password, rememberMe, accessToken, this)
         .done(response => {
             if(response.Result === 0) {
-                me._data = response;
+                this._data = response;
                 //If rememberMe is set to true, we store userName and sessionToken locally to future use
                 if(rememberMe) {
                     cookie.save('accessToken', response.SessionTicket.AccessToken);
@@ -75,7 +74,7 @@ class SessionStore extends BaseStore {
                     this._accessToken = response.SessionTicket.AccessToken;
                 }
                 //Notify the change on session
-                me.emitChange(response);
+                this.emitChange(response);
             }
         })
         .always(() => {
@@ -86,7 +85,6 @@ class SessionStore extends BaseStore {
     }
 
     logout () {
-        const me = this;
         LoadingStore.show();
         return AuthenticationService.logout(this.sessionTicket, this)
         .done(response => {
@@ -94,7 +92,7 @@ class SessionStore extends BaseStore {
             this._accessToken = null;
             cookie.remove('accessToken');
             cookie.remove('userName');
-            me.emitChange(response);
+            this.emitChange(response);
         })
         .always(() => {
            LoadingStore.hide(); 
