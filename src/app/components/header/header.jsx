@@ -12,14 +12,14 @@ export default class Header extends React.Component {
 	}
 
 	onLogoutClick () {
-		SessionStore.logout().done(response => {
+		SessionStore.logout().always(() => {
 			this.context.router.push('/');
 		});
 	}
 
 	render() {
 
-		const rightContent = (SessionStore.isLoggedIn() ? 
+		const rightContent = SessionStore.isLoggedIn() ? 
 			<ul className="nav navbar-nav navbar-right">
 			    <li className="dropdown">
 			        <a className="dropdown-toggle" data-toggle="dropdown" onClick={this.onLogoutClick.bind(this)}>
@@ -27,7 +27,7 @@ export default class Header extends React.Component {
 			        </a>
 			    </li>
 			</ul> : 
-			<LanguagesShortcut />);
+			<LanguagesShortcut />;
 
 		return (
 			<div className="navbar navbar-inverse navbar-fixed-top">
@@ -49,8 +49,6 @@ export default class Header extends React.Component {
 						</div>
 					</div>
 					<div className="navbar-collapse collapse">
-						<ul className="nav navbar-nav">
-						</ul>
 						{rightContent}
 					</div>
 				</div>
