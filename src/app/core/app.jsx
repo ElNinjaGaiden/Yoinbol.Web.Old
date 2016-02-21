@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from './loader';
+import LanguagesStore from '../store/languages';
 import LocalesStore from '../store/locales';
 import SessionStore from '../store/session';
 
@@ -7,10 +8,7 @@ export default class App extends React.Component {
 
     componentWillMount () {
         LocalesStore.refresh(SessionStore.currentLanguageId);
-    }
-
-    onLocalesLoad (locales) {
-        console.log('App:onLocalesLoad', locales);
+        LanguagesStore.load();
     }
 
     render() {

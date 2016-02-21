@@ -9,33 +9,21 @@ import LocalizedComponent from '../view/base/LocalizedComponent';
 
 class LanguagesShortcut extends LocalizedComponent {
 
-	static get contextTypes () {
-		return {
-    		router: React.PropTypes.object,
-    		refresh: React.PropTypes.func
-		};
-	}
-
 	componentWillMount() {
 		super.componentWillMount();
 	}
 
 	componentDidMount () {
 		super.componentDidMount();
-		const me = this;
-		if(!LanguagesStore.initialized) {
-			this._onLanguagesChangedListener = me.onLanguagesLoad.bind(me);
-			LanguagesStore.addChangeListener(this._onLanguagesChangedListener);
-			LanguagesStore.load();
-		}
-		else {
-			me.onLanguagesLoad();
-		}
+		this.setState(this.getLanguagesState());
+
+		this._onLanguagesChangedListener = this.onLanguagesLoad.bind(this);
+		LanguagesStore.addChangeListener(this._onLanguagesChangedListener);
 	}
 
 	componentWillUnmount() {
 		super.componentWillUnmount();
-		LanguagesStore.removeChangeListener(this.onLanguagesLoad);
+		LanguagesStore.removeChangeListener(this._onLanguagesChangedListener);
 		this._onLanguagesChangedListener && LocalesStore.removeChangeListener(this._onLanguagesChangedListener);
 	}
 
@@ -103,7 +91,7 @@ class LanguagesShortcut extends LocalizedComponent {
 	}
 }
 
-class Header extends React.Component {
+export default class Header extends React.Component {
 
 	render() {
 		return (
@@ -142,5 +130,3 @@ class Header extends React.Component {
 	}
 
 } 
-
-export default Header;

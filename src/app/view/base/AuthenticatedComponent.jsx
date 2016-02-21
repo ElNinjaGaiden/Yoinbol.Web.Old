@@ -2,6 +2,7 @@ import React from 'react';
 import SessionStore from '../../store/session';
 import { Router } from 'react-router';
 import Unauthorized from '../common/unauthorized';
+import Home from '../home/home';
 
 export default (ComposedComponent) => {
 
@@ -53,7 +54,7 @@ export default (ComposedComponent) => {
 		      	)
 	    	}
 	    	else {
-	    		return <Unauthorized />
+	    		return <Home />
 	    	}
 	    }
   	}

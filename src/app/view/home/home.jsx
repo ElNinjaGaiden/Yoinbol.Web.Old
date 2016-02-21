@@ -12,8 +12,7 @@ class Home extends LocalizedComponent {
 
 	static get contextTypes () {
 		return {
-    		router: React.PropTypes.object,
-    		location: React.PropTypes.object
+    		router: React.PropTypes.object
 		};
 	}
 
