@@ -46,7 +46,7 @@ export default class LanguagesShortcut extends LocalizedComponent {
 
 	changeLanguage(languageId) {
 		SessionStore.currentLanguageId = languageId;
-		LocalesStore.refresh(SessionStore.currentLanguageId);
+		LocalesStore.load(SessionStore.currentLanguageId);
 	}
 
 	getCurrentLanguaje () {
