@@ -7,15 +7,24 @@ class LocalesService extends BaseService {
 		super();
 		this._loading = false;
 		this._promise = null;
+		this._languageId = null;
 	}
 
-	load () {
+	get languageId () {
+		return this._languageId;
+	}
+
+	refresh(languageId) {
+		this._languageId = languageId;
+		this.load();
+	}
+
+	load (languageId, scope) {
 		const me = this;
 		if(!me._loading) {
-			const currentLanguageId = SessionStore.currentLanguageId;
-			const url = 'dist/assets/locales/' + currentLanguageId + '.json';
+			const url = 'dist/assets/locales/' + (languageId || this._languageId) + '.json';
 			me._loading = true;
-			me._promise = me.apiRequest(url, {}, 'GET', me).always(function () {
+			me._promise = me.apiRequest(url, {}, 'GET', scope || this).always(function () {
 				me._loading = false;
 			});
 			return me._promise;

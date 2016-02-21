@@ -12,21 +12,16 @@ class LocalesStore extends BaseStore {
 		return this._locales;
 	}
 
-	load () {
-		var me = this;
-		if(!me.initialized) {
-			LocalesService.load().done(function (response) {
-				me._locales = response;
-				me._initialized = true;
-				me.emitChange(response);
-			});
-		}
+	refresh (languageId) {
+		LocalesService.load(languageId, this).done(function (response) {
+			this._locales = response;
+			this._initialized = true;
+			this.emitChange(response);
+		});
 	}
 
 	get (key) {
-		const me = this;
-		const locales = me._locales;
-		return locales[key];
+		return this._locales[key];
 	}
 
 }

@@ -23,6 +23,9 @@
 			"slogan": "Life is a game...",
 			"loginTabLabel": "Login",
 			"registerTabLabel": "Register"
+		},
+		"dashboard": {
+			"test": "Hello"
 		}
 	}
 }

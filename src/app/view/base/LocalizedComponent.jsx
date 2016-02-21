@@ -12,14 +12,15 @@ export default class LocalizedComponent extends React.Component {
 	}
 
 	componentDidMount () {
-		LocalesStore.addChangeListener(this.onLocalesLoad.bind(this));
+		this._localesChangedLister = this.onLocalesChanged.bind(this)
+		LocalesStore.addChangeListener(this._localesChangedLister);
 	}
 
 	componentWillUnmount () {
-		LocalesStore.removeChangeListener(this.onLocalesLoad.bind(this));
+		LocalesStore.removeChangeListener(this._localesChangedLister);
 	}
 
-	onLocalesLoad() {
+	onLocalesChanged() {
 		this.setState(this.getLocalesState());
 	}
 }

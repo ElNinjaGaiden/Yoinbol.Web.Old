@@ -2,7 +2,6 @@ import React from 'react';
 import SessionStore from '../../store/session';
 import { Router } from 'react-router';
 import Unauthorized from '../common/unauthorized';
-import DoLoggin from '../common/doLoggin';
 
 export default (ComposedComponent) => {
 
@@ -33,13 +32,13 @@ export default (ComposedComponent) => {
 	    	}
 	    }
 
+	    componentWillUnmount() {
+	    	SessionStore.removeChangeListener(this.sessionStoreListener);
+	    }
+
 	    // After any change, we update the component’s state so that it’s rendered again.
 	    _onChange() {
 	      	this.setState(this._getLoginState());
-	    }
-
-	    componentWillUnmount() {
-	    	SessionStore.removeChangeListener(this.sessionStoreListener);
 	    }
 
 	    render() {

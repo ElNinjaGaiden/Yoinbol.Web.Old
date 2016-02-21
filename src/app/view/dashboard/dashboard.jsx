@@ -1,11 +1,26 @@
 import React from 'react';
 import Header from '../../core/header';
+import LocalesStore from '../../store/locales';
+import LocalizedComponent from '../base/LocalizedComponent';
 import AuthenticatedComponent from '../base/AuthenticatedComponent';
 
-export default AuthenticatedComponent(class Dashboard extends React.Component {
+export default AuthenticatedComponent(class Dashboard extends LocalizedComponent {
 
-	componentDidUpdate() {
-		console.log('Update', arguments);
+	componentWillMount () {
+		super.componentWillMount();
+	}
+
+    componentDidMount() {
+    	super.componentDidMount();
+
+    }
+
+    componentWillUnmount() {
+    	super.componentWillUnmount();
+    }
+
+	getLocalesState () {
+		return LocalesStore.initialized ? { locales: LocalesStore.locales.views.dashboard } : { locales: {} };
 	}
 
 	render () {
@@ -13,7 +28,7 @@ export default AuthenticatedComponent(class Dashboard extends React.Component {
 			<div>
 				<Header />
 				<div className="container">
-					Dashboard
+					{this.state.locales.test}
 				</div>
 			</div>
 		)

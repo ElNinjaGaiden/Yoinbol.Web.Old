@@ -5,8 +5,9 @@ import arrayFilter from 'array-filter';
 import LanguagesStore from '../store/languages';
 import SessionStore from '../store/session';
 import LocalesStore from '../store/locales';
+import LocalizedComponent from '../view/base/LocalizedComponent';
 
-class LanguagesShortcut extends React.Component {
+class LanguagesShortcut extends LocalizedComponent {
 
 	static get contextTypes () {
 		return {
@@ -16,26 +17,26 @@ class LanguagesShortcut extends React.Component {
 	}
 
 	componentWillMount() {
-		const me = this;
-		me.setState({});
+		super.componentWillMount();
 	}
 
 	componentDidMount () {
+		super.componentDidMount();
 		const me = this;
 		if(!LanguagesStore.initialized) {
-			LanguagesStore.addChangeListener(me.onLanguagesLoad.bind(me));
+			this._onLanguagesChangedListener = me.onLanguagesLoad.bind(me);
+			LanguagesStore.addChangeListener(this._onLanguagesChangedListener);
 			LanguagesStore.load();
 		}
 		else {
 			me.onLanguagesLoad();
 		}
+	}
 
-		if(!LocalesStore.initialized) {
-			LocalesStore.addChangeListener(me.onLocalesLoad.bind(me));
-		}
-		else {
-			me.onLocalesLoad();
-		}		
+	componentWillUnmount() {
+		super.componentWillUnmount();
+		LanguagesStore.removeChangeListener(this.onLanguagesLoad);
+		this._onLanguagesChangedListener && LocalesStore.removeChangeListener(this._onLanguagesChangedListener);
 	}
 
 	getLanguagesState () {
@@ -45,9 +46,14 @@ class LanguagesShortcut extends React.Component {
 	}
 
 	getLocalesState () {
-		return {
-			locales: LocalesStore.locales.app.header
-		};
+		if(LocalesStore.initialized) {
+			return {
+				locales: LocalesStore.locales.app.header
+			};
+		}
+		else {
+			return { locales: {} };
+		}
 	}
 
 	onLanguagesLoad () {
@@ -58,16 +64,9 @@ class LanguagesShortcut extends React.Component {
 		this.setState(this.getLocalesState());
 	}
 
-	componentWillUnmount() {
-		const me = this;
-		LanguagesStore.removeChangeListener(me.onLanguagesLoad);
-		LocalesStore.removeChangeListener(me.onLocalesLoad);
-	}
-
 	changeLanguage(languageId) {
 		SessionStore.currentLanguageId = languageId;
-		//location.reload();
-		this.context.refresh();
+		LocalesStore.refresh(SessionStore.currentLanguageId);
 	}
 
 	render () {

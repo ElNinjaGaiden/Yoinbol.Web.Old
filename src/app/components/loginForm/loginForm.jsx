@@ -3,13 +3,13 @@ import { render } from 'react-dom';
 import LocalesStore from '../../store/locales';
 import SessionStore from '../../store/session';
 import cookie from 'react-cookie';
+import LocalizedComponent from '../../view/base/LocalizedComponent';
 
-class LoginForm extends React.Component {
+export default class LoginForm extends LocalizedComponent {
 
 	static get contextTypes () {
 		return {
-    		router: React.PropTypes.object,
-    		location: React.PropTypes.object
+    		router: React.PropTypes.object
 		};
 	}
 
@@ -19,43 +19,23 @@ class LoginForm extends React.Component {
   	
 
 	componentWillMount() {
-		const me = this;
-		me.setState({
+		super.componentWillMount();
+		this.setState({
 			userName: '',
 			password: '',
-			rememberMe: true,
-			locales: {
-				userNameInput: '',
-				passwordInput: '',
-				rememberMeInput: '',
-				loginButton: '',
-				forgotPassword: '',
-				loginWithFacebook: '',
-				or: ''
-			}
+			rememberMe: true
 		});
 	}
 
 	componentDidMount () {
-		const me = this;
-		me.init();
-	}
-
-	init () {
-		const me = this;
-
-		if(!LocalesStore.initialized) {
-			LocalesStore.addChangeListener(me.onLocalesLoad.bind(me));
-		}
-		else {
-			me.onLocalesLoad();
-		}
-
-		SessionStore.addChangeListener(me.onLoginCallback.bind(me));
+		super.componentDidMount();
+		this._onSessionStoreChangedListener = this.onLoginCallback.bind(this);
+		SessionStore.addChangeListener(this._onSessionStoreChangedListener);
 	}
 
 	componentWillUnmount() {
-        SessionStore.removeChangeListener(this.onLoginCallback.bind(this));
+		super.componentWillUnmount();
+        SessionStore.removeChangeListener(this._onSessionStoreChangedListener);
     }
 
 	onLocalesLoad() {
@@ -68,16 +48,20 @@ class LoginForm extends React.Component {
 	}
 
 	getLocalesState () {
-		let locales = LocalesStore.locales.components.loginForm;
-		locales.or = LocalesStore.locales.common.or
-		return {
-			locales: locales
-		};
+		if(LocalesStore.initialized) {
+			let locales = LocalesStore.locales.components.loginForm;
+			locales.or = LocalesStore.locales.common.or
+			return {
+				locales: locales
+			};
+		}
+		else {
+			return { locales : {} };
+		}
 	}
 
 	onLoginClick () {
-		const me = this;
-		SessionStore.login(me.state.userName, me.state.password, me.state.rememberMe);
+		SessionStore.login(this.state.userName, this.state.password, this.state.rememberMe);
 		return false;
 	}
 
@@ -140,5 +124,3 @@ class LoginForm extends React.Component {
 		)
 	}
 }
-
-export default LoginForm

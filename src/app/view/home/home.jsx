@@ -119,7 +119,7 @@ class Home extends LocalizedComponent {
 				                    </ul>
 				                    <div className="tab-content">
 				                        <div className="tab-pane active animated fadeInRight" id="loginformtab">
-				                            <LoginForm></LoginForm>
+				                        	<LoginForm></LoginForm>
 				                        </div>
 				                        <div className="tab-pane animated fadeInRight" id="registerformtab">
 				                            <RegisterForm></RegisterForm>

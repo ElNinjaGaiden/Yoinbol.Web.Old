@@ -1,17 +1,12 @@
 import React from 'react';
 import Loader from './loader';
 import LocalesStore from '../store/locales';
+import SessionStore from '../store/session';
 
-class App extends React.Component {
-
-    getChildContext() {
-        return {
-            refresh: () => this.forceUpdate()
-        }
-    }
+export default class App extends React.Component {
 
     componentWillMount () {
-        LocalesStore.load();
+        LocalesStore.refresh(SessionStore.currentLanguageId);
     }
 
     onLocalesLoad (locales) {
@@ -29,9 +24,3 @@ class App extends React.Component {
         )
     }
 }
-
-App.childContextTypes = {
-    refresh: React.PropTypes.func
-}
-
-export default App;

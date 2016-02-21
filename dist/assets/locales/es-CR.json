@@ -23,6 +23,9 @@
 			"slogan": "La vida es un juego...",
 			"loginTabLabel": "Iniciar sesión",
 			"registerTabLabel": "Registrarse"
+		},
+		"dashboard": {
+			"test": "Hola"
 		}
 	}
 }
