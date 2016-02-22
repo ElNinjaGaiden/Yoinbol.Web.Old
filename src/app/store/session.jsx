@@ -111,7 +111,7 @@ class SessionStore extends BaseStore {
 
                         const accessToken = cookie.load('accessToken');
 
-                        AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, accessToken, this.facebookAccountTypeId, this)
+                        AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, accessToken, SessionStore.facebookAccountTypeId, this)
                         .done(response => {
                             if(response.Result === 0) {
                                 this._data = response;
