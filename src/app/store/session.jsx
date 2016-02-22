@@ -14,6 +14,10 @@ class SessionStore extends BaseStore {
         this._isDoingLoggin = false;
     }
 
+    static get facebookAccountTypeId () {
+        return 2;
+    }
+
     // Region "Public Properties"
 
     get data () {
@@ -91,6 +95,7 @@ class SessionStore extends BaseStore {
     }
 
     loginWithFacebook () {
+
         this._isDoingLoggin = true;
         LoadingStore.show();
 
@@ -106,13 +111,13 @@ class SessionStore extends BaseStore {
 
                         const accessToken = cookie.load('accessToken');
 
-                        AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, accessToken, 2, this)
+                        AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, accessToken, this.facebookAccountTypeId, this)
                         .done(response => {
                             if(response.Result === 0) {
                                 this._data = response;
                                 cookie.save('accessToken', response.SessionTicket.AccessToken);
                                 cookie.save('userName', userDataResponse.data.email);
-                                cookie.save('accountType', 2);
+                                cookie.save('accountType', this.facebookAccountTypeId);
                                 this._accessToken = response.SessionTicket.AccessToken;
                                 //Notify the change on session
                                 this.emitChange(response);
@@ -140,13 +145,13 @@ class SessionStore extends BaseStore {
 
                             const accessToken = cookie.load('accessToken');
 
-                            AuthenticationService.login(userDataResponse.data.email, loginResponse.data.authResponse.accessToken, true, accessToken, 2, this)
+                            AuthenticationService.login(userDataResponse.data.email, loginResponse.data.authResponse.accessToken, true, accessToken, this.facebookAccountTypeId, this)
                             .done(response => {
                                 if(response.Result === 0) {
                                     this._data = response;
                                     cookie.save('accessToken', response.SessionTicket.AccessToken);
                                     cookie.save('userName', userDataResponse.data.email);
-                                    cookie.save('accountType', 2);
+                                    cookie.save('accountType', this.facebookAccountTypeId);
                                     this._accessToken = response.SessionTicket.AccessToken;
                                     //Notify the change on session
                                     this.emitChange(response);
