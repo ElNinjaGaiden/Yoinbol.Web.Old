@@ -140,17 +140,14 @@ class SessionStore extends BaseStore {
 
                             const accessToken = cookie.load('accessToken');
 
-                            AuthenticationService.login(userDataResponse.data.email, loginStatusResponse.data.authResponse.accessToken, true, 2)
+                            AuthenticationService.login(userDataResponse.data.email, loginResponse.data.authResponse.accessToken, true, accessToken, 2, this)
                             .done(response => {
                                 if(response.Result === 0) {
                                     this._data = response;
-                                    //If rememberMe is set to true, we store userName and sessionToken locally to future use
-                                    if(rememberMe) {
-                                        cookie.save('accessToken', response.SessionTicket.AccessToken);
-                                        cookie.save('userName', userName);
-                                        cookie.save('accountType', 2);
-                                        this._accessToken = response.SessionTicket.AccessToken;
-                                    }
+                                    cookie.save('accessToken', response.SessionTicket.AccessToken);
+                                    cookie.save('userName', userDataResponse.data.email);
+                                    cookie.save('accountType', 2);
+                                    this._accessToken = response.SessionTicket.AccessToken;
                                     //Notify the change on session
                                     this.emitChange(response);
                                 }
