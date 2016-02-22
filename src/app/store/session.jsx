@@ -154,7 +154,7 @@ class SessionStore extends BaseStore {
                                                         loginResponse.data.authResponse.accessToken, 
                                                         true, 
                                                         accessToken, 
-                                                        this.facebookAccountTypeId, 
+                                                        SessionStore.facebookAccountTypeId, 
                                                         this)
                             .done(response => {
                                 if(response.Result === 0) {
